@@ -1,6 +1,5 @@
 # Income Expense Tracker API
-### Developed a income-expense tracker RESTAPI to track income, expenses and account balance for a user and
-### send periodical SMS & email alerts to all the susbcribed  users
+### Developed a income-expense tracker RESTAPI to track income, expenses and account balance for a user and send periodical SMS & email alerts to all the susbcribed  users
 ### I have integrated Swagger documentation for testing  & documentation of API by providing mock data
 
 ## My API supports the following features
