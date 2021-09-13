@@ -35,6 +35,7 @@ schema_view = get_schema_view(
 )
 from utils.views import *
 from django.conf.urls import handler400, handler403, handler404, handler500
+import notifications.urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -43,6 +44,7 @@ urlpatterns = [
     path("expenses/", include("expenses.urls")),
     path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path('notifications/', include(notifications.urls, namespace='notifications')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 handler404 = error404
 handler500 = error500

@@ -12,6 +12,8 @@ Django==3.1.7
 django-cors-headers==3.7.0
 django-crontab==0.7.1
 django-filter==2.4.0
+django-model-utils==4.1.1
+django-notifications-hq==1.6.0
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.7.1
 drf-yasg==1.20.0
@@ -20,6 +22,7 @@ importlib==1.0.4
 inflection==0.5.1
 itypes==1.2.0
 Jinja2==3.0.1
+jsonfield==3.1.0
 Markdown==3.3.4
 MarkupSafe==2.0.1
 mypy-extensions==0.4.3
@@ -35,6 +38,7 @@ ruamel.yaml==0.17.9
 ruamel.yaml.clib==0.2.2
 six==1.16.0
 sqlparse==0.4.1
+swapper==1.1.2.post1
 toml==0.10.2
 twilio==6.62.0
 uritemplate==3.0.1

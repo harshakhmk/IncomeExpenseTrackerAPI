@@ -19,6 +19,9 @@ from utils.email import Util
 from django.conf import settings
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from utils.notifications import Notifications
+admin_user = User.objects.all().filter(is_superuser=True)
+bot_user = User.objects.get(email="botIETeam@gmail.com")
 
 # Create your views here.
 class RegisterView(generics.GenericAPIView):
@@ -76,6 +79,7 @@ class VerifyUserEmail(views.APIView):
 
             user.is_verified = True
             user.save()
+            Notifications.send_notification(bot_user, user,f"Dear {user.username} your account is successfully verified")
             return Response(
                 {"message": "Successfully verified"}, status=status.HTTP_200_OK
             )

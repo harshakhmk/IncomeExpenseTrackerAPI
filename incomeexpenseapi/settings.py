@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "authenticate",
     "corsheaders",
     "drf_yasg",
+    "notifications",
     "expenses",
     "userstats",
     "django_crontab",
@@ -89,7 +90,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "incomeexpenseapi.wsgi.application"
 
-
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True,'SOFT_DELETE': True}
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 

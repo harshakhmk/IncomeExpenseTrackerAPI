@@ -7,11 +7,15 @@ from rest_framework import permissions
 from utils.permission import *
 from authenticate.models import Alerts, User
 from utils.email import Util
+from utils.notifications import Notifications
 from utils.sms import send_sms
 from django.conf import settings
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from authenticate.models import *
 
+admin_user = User.objects.all().filter(is_superuser=True)
+bot_user = User.objects.get(email="botIETeam@gmail.com")
 
 class ExpenseSummaryStats(APIView):
     permission_classes = (
@@ -223,16 +227,35 @@ class BalanceSummaryStats(APIView):
 
 def send_alerts(user, user_alerts, data):
     if user_alerts.subscribe_to_email:
-        Util.send_email(
+        response = Util.send_email(
             {
                 "subject": data.get("subject", ""),
                 "message": data.get("message", ""),
                 "to_email": user.email,
             }
         )
+        if response.get("status", "") == "success":
+            Notifications.send_notification(bot_user, user, response.get("message", ""))
+        elif response.get("status", "") == "error":
+            Notifications.send_notification(
+                bot_user,
+                admin_user,
+                response.get("message", "") + response.get("details", ""),
+            )
+            Notifications.send_notification(bot_user, user, response.get("message", ""))
+
     if user_alerts.subscribe_to_phone:
         # send_sms()
-        pass
+        response = send_sms(user.phonenumber, user.username,data.get("message",""))
+        if response.get("status", "") == "success":
+            Notifications.send_notification(user, user, response.get("message", ""))
+        elif response.get("status", "") == "error":
+            Notifications.send_notification(
+                bot_user,
+                admin_user,
+                response.get("message", "") + response.get("details", ""),
+            )
+            Notifications.send_notification(bot_user, user, response.get("message", ""))
 
 
 def prepare_alerts(user, date):

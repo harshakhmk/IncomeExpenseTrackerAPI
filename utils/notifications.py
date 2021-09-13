@@ -8,5 +8,10 @@ class Notifications:
             notify.send(
                 actor=sender, recipient=recipient, verb="Message", description=message
             )
+            return {"status": "success", "message": " Notification sent"}
         except Exception as e:
-            pass
+            return {
+                "status": "error",
+                "message": "unable to send notification",
+                "details": f"{e} has occured",
+            }

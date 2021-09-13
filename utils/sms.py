@@ -16,8 +16,24 @@ def send_sms(number, name, message):
         client = Client(account_sid, auth_token)
 
         if IE_TEAM_MOBILE is not None:
-            message = client.messages.create(
-                body=message, from_=IE_TEAM_MOBILE, to=number
-            )
+            try:
+                message = client.messages.create(
+                    body=message, from_=IE_TEAM_MOBILE, to=number
+                )
+                return {"status": "success", "message": "successfully sent sms to user"}
+
+            except Exception as e:
+                return {
+                    "status": "error",
+                    "message": "Unable to send sms to user",
+                    "details": f"{e} has occurred",
+                }
+
+        return {"status": "error", "message": "IE team phone number missing"}
+
     else:
-        raise Exception("Account Credentials Not Found")
+        return {
+            "status": "error",
+            "message": "account details missing",
+            "details": "Add account_sid and auth_token",
+        }
