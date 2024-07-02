@@ -259,7 +259,7 @@ def send_alerts(user, user_alerts, data):
 
 
 def prepare_alerts(user, date):
-    user_alerts = Alert.objects.get(user=user)
+    user_alerts = Alerts.objects.get(user=user)
     income, expense, balance = {}, {}, {}
     income["message"] = IncomeSummaryStats.get_data(user, date)
     expense["message"] = ExpenseSummaryStats.get_data(user, date)

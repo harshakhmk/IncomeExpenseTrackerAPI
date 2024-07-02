@@ -48,7 +48,15 @@ INSTALLED_APPS = [
     "django_crontab",
 ]
 AUTH_USER_MODEL = "authenticate.User"
-
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 # The above cron job is scheduled to be run at every 2nd minute of each hour.
 CRONJOBS = [
     ("00 4 * * *", "utils.cron.CronJob.daily_alerts()"),
@@ -69,6 +77,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware"
 ]
 
 ROOT_URLCONF = "incomeexpenseapi.urls"
